@@ -10,11 +10,15 @@ function getPlanType() {
   );
   return check ? check.value : "off";
 }
-let planMOnthlyorYearly = getPlanType();
+let planIsYearly = getPlanType();
 const planPrices = document.getElementsByClassName("plan-price");
+const addOnPriceComp = document.getElementsByClassName('addOn-price')
+
 const monthlyPlanPrices = ["9", "12", "15"];
+const addOnPrices = [1,2,2];
+
 const prevBut = document.getElementsByClassName('prev')[0];
-console.log(planMOnthlyorYearly);
+console.log(planIsYearly);
 // console.log(pageNum);
 let name = "";
 let email = "";
@@ -32,13 +36,20 @@ function goNext() {
     if (name == "") errs[0].innerHTML = "This field is required";
     if (email == "") errs[1].innerHTML = "This field is required";
     if (phone == "") errs[2].innerHTML = "This field is required";
-    if (name != "" && email != "" && phone != "") {
-      document.getElementById("option2").checked = true;
-      forms[0].classList.add('hidden');
-      forms[1].classList.remove('hidden');
-      prevBut.classList.remove('hidden');
-    }
+    if (name == "" || email == "" || phone == "")
+    return;
+    prevBut.classList.remove('hidden');
   }
+  if(pageNum=='2'){
+    for(let i = 0;i<addOnPriceComp.length;i++)
+    addOnPriceComp[i].textContent = planIsYearly=='on'?`+$${addOnPrices[i]*10}/yr`:`+$${addOnPrices[i]}/mo`;
+  }
+  if(pageNum=='3'){
+
+  }
+  document.getElementById(`option${Number(pageNum)+1}`).checked = true;
+  forms[pageNum-1].classList.add('hidden');
+  forms[pageNum].classList.remove('hidden');
 }
 
 function goBack(){
@@ -54,18 +65,28 @@ function goBack(){
 
 function monthlyToggler() {
   setTimeout(() => {
-    planMOnthlyorYearly = getPlanType();
-    console.log(planMOnthlyorYearly);
+    planIsYearly = getPlanType();
+    console.log(planIsYearly);
     const planPromo = document.getElementsByClassName("plan-promo");
     for (let i = 0; i < planPromo.length; i++)
-      if (planMOnthlyorYearly == "on") {
+      if (planIsYearly == "on") {
         planPromo[i].classList.remove("hidden");
         planPrices[i].textContent = `$${monthlyPlanPrices[i] * 10}/yr`;
       } else {
         planPromo[i].classList.add("hidden");
-        planPrices[i].textContent = `$${monthlyPlanPrices[i]*10}/mo`;
+        planPrices[i].textContent = `$${monthlyPlanPrices[i]}/mo`;
       }
   }, 10);
   if (pageNum == "2") {
+  }
+}
+
+
+function updateLabelStyle(checkbox) {
+  var label = checkbox.parentNode;
+  if (checkbox.checked) {
+    label.classList.add("checked");
+  } else {
+    label.classList.remove("checked");
   }
 }

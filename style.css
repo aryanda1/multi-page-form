@@ -156,6 +156,7 @@ input[type="radio"]:checked + .custom-radio {
   gap: 1rem;
   padding: 1.5rem;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 input[type="radio"]:checked + .plan-label {
@@ -258,9 +259,55 @@ input:checked + .toggle .toggle__handler {
   border: 1px solid var(--neutral-light-gray);
   display: block;
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 1rem 1.5rem;
   border-radius: 10px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.addOn:hover {
+  border-color: var(--primary-purple-blue);
+}
+
+.addOn.checked {
+  border-color: var(--primary-purple-blue);
+  background-color: hsl(228, 100%, 97%);
+}
+
+.addOn span {
+  height: 20px;
+  width: 20px;
+  border: 1px solid var(--neutral-light-gray);
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+  transition: all 0.5s;
+}
+
+[type="checkbox"]:checked + span {
+  background: var(--primary-purple-blue);
+  border: 1px solid #3a49f4;
+}
+
+[type="checkbox"] + span:before {
+  content: "\2714";
+  font-size: 1.6rem;
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  color: transparent;
+  background-image: linear-gradient(#fff, #fff);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-position: -20px 0;
+  transition: 0.5s;
+}
+
+/* Style its checked state...with a ticked icon */
+[type="checkbox"]:checked + span:before {
+  background-position: 0 0;
 }
 
 .addOn-descri {
@@ -269,6 +316,22 @@ input:checked + .toggle .toggle__handler {
   justify-content: space-between;
   width: 100%;
   align-items: center;
+}
+
+.addOn-desc > p:first-child {
+  font-weight: 700;
+  color: var(--primary-marine-blue);
+  font-size: 1.3rem;
+}
+
+.addOn-desc > p:last-child {
+  margin-top: 0.3rem;
+  color: var(--primary-pastel-blue);
+  font-size: 1.2rem;
+}
+
+.addOn-price {
+  color: var(--primary-purple-blue);
 }
 
 .button {
@@ -304,4 +367,8 @@ button {
 
 .button .prev:hover {
   color: var(--primary-marine-blue);
+}
+
+label input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
 }

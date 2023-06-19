@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="content">
-        <div class="form hidden">
+        <div class="form">
           <h1>Personal info</h1>
           <p class="description">
             Please provide your name, email address, and phone number.
@@ -149,7 +149,7 @@
             </div>
           </div>
         </div>
-        <div class="form">
+        <div class="form hidden">
           <h1>Pick add-ons</h1>
           <p class="description">
             Add-ons help enhance your gaming experience.
@@ -157,7 +157,8 @@
           <div class="input-container">
             <div class="addOns-types">
               <label for="firstAddon" class="addOn">
-                <input id="firstAddon" type="checkbox" />
+                <input id="firstAddon" type="checkbox" onclick="updateLabelStyle(this)"/>
+                <span></span>
                 <div class="addOn-descri">
                   <div class="addOn-desc">
                     <p>Online Service</p>
@@ -167,7 +168,8 @@
                 </div> </label
               ><br />
               <label for="secondAddon" class="addOn">
-                <input id="secondAddon" type="checkbox" />
+                <input id="secondAddon" type="checkbox" onclick="updateLabelStyle(this)"/>
+                <span></span>
                 <div class="addOn-descri">
                   <div class="addOn-desc">
                     <p>Larger Storage</p>
@@ -177,7 +179,8 @@
                 </div> </label
               ><br />
               <label for="thirdAddon" class="addOn"
-                ><input id="thirdAddon" type="checkbox" />
+                ><input id="thirdAddon" type="checkbox" onclick="updateLabelStyle(this)"/>
+                <span></span>
                 <div class="addOn-descri">
                   <div class="addOn-desc">
                     <p>Customizable profile</p>
@@ -186,7 +189,6 @@
                   <div class="addOn-price">+$2/mo</div>
                 </div>
               </label>
-              <input type="checkbox" />
             </div>
           </div>
         </div>
