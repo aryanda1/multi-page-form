@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Frontend Mentor | Multi-step form</title>
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <picture>
+          <source
+            media="(min-width: 768px)"
+            srcset="assets/images/bg-sidebar-desktop.svg"
+          />
+          <img src="assets/images/bg-sidebar-mobile.svg" alt="Image" />
+        </picture>
+        <div class="custom-radio-wrapper">
+          <input
+            type="radio"
+            id="option1"
+            name="options"
+            value="1"
+            checked
+            disabled
+          />
+          <label for="option1" class="custom-radio">1</label><br />
+
+          <input type="radio" id="option2" name="options" value="2" disabled />
+          <label for="option2" class="custom-radio">2</label><br />
+
+          <input type="radio" id="option3" name="options" value="3" disabled />
+          <label for="option3" class="custom-radio">3</label><br />
+
+          <input type="radio" id="option4" name="options" value="4" disabled />
+          <label for="option4" class="custom-radio">4</label><br />
+        </div>
+      </div>
+      <div class="content">
+        <div class="form hidden">
+          <h1>Personal info</h1>
+          <p class="description">
+            Please provide your name, email address, and phone number.
+          </p>
+          <div class="input-container">
+            <div class="inputs">
+              <label for="name">Name</label>
+              <span class="error-msg"></span>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="e.g. Stephen King"
+              />
+            </div>
+            <div class="inputs">
+              <label for="email">Email Address</label>
+              <span class="error-msg"></span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="e.g. stephenking@lorem.com"
+              />
+            </div>
+            <div class="inputs">
+              <label for="phone">Phone Number</label>
+              <span class="error-msg"></span>
+              <input
+                type="number"
+                id="phone"
+                name="phone"
+                placeholder="e.g. +1 234 567 890"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form hidden">
+          <h1>Select your plan</h1>
+          <p class="description">
+            You have the option of monthly or yearly billing.
+          </p>
+          <div class="input-container">
+            <div class="plan-types">
+              <input
+                type="radio"
+                id="arcade"
+                name="plan-options"
+                value="arcade"
+                checked
+              />
+              <label for="arcade" class="plan-label">
+                <img src="assets/images/icon-arcade.svg" />
+                <div>
+                  <p class="plan-name">Arcade</p>
+                  <p class="plan-price">$9/mo</p>
+                  <p class="plan-promo hidden">2 months free</p>
+                </div> </label
+              ><br />
+              <input
+                type="radio"
+                id="advanced"
+                name="plan-options"
+                value="advanced"
+              />
+              <label for="advanced" class="plan-label"
+                ><img src="assets/images/icon-advanced.svg" />
+                <div>
+                  <p class="plan-name">Advanced</p>
+                  <p class="plan-price">$12/mo</p>
+                  <p class="plan-promo hidden">2 months free</p>
+                </div></label
+              ><br />
+              <input type="radio" id="pro" name="plan-options" value="pro" />
+              <label for="pro" class="plan-label"
+                ><img src="assets/images/icon-pro.svg" />
+                <div>
+                  <p class="plan-name">Pro</p>
+                  <p class="plan-price">$15/mo</p>
+                  <p class="plan-promo hidden">2 months free</p>
+                </div>
+              </label>
+            </div>
+            <div class="toggleWrapper">
+              <input
+                type="checkbox"
+                class="plan-type"
+                id="plan-type"
+                name="plan-type"
+              />
+              <label for="plan-type" class="toggle" onclick="monthlyToggler()">
+                <span class="toggle__handler"> </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form">
+          <h1>Pick add-ons</h1>
+          <p class="description">
+            Add-ons help enhance your gaming experience.
+          </p>
+          <div class="input-container">
+            <div class="addOns-types">
+              <label for="firstAddon" class="addOn">
+                <input id="firstAddon" type="checkbox" />
+                <div class="addOn-descri">
+                  <div class="addOn-desc">
+                    <p>Online Service</p>
+                    <p>Access to multiplayer games</p>
+                  </div>
+                  <div class="addOn-price">+$1/mo</div>
+                </div> </label
+              ><br />
+              <label for="secondAddon" class="addOn">
+                <input id="secondAddon" type="checkbox" />
+                <div class="addOn-descri">
+                  <div class="addOn-desc">
+                    <p>Larger Storage</p>
+                    <p>Extra 1TB of cloud space</p>
+                  </div>
+                  <div class="addOn-price">+$2/mo</div>
+                </div> </label
+              ><br />
+              <label for="thirdAddon" class="addOn"
+                ><input id="thirdAddon" type="checkbox" />
+                <div class="addOn-descri">
+                  <div class="addOn-desc">
+                    <p>Customizable profile</p>
+                    <p>Custom theme on your profile</p>
+                  </div>
+                  <div class="addOn-price">+$2/mo</div>
+                </div>
+              </label>
+              <input type="checkbox" />
+            </div>
+          </div>
+        </div>
+        <div class="button">
+          <button class="prev hidden" onclick="goBack()">Go Back</button>
+          <button class="next" onclick="goNext()">Next Step</button>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="main.js"></script>
+</html>
