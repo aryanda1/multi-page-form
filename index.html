@@ -101,7 +101,7 @@
                 type="radio"
                 id="arcade"
                 name="plan-options"
-                value="arcade"
+                value="0"
                 checked
               />
               <label for="arcade" class="plan-label">
@@ -112,12 +112,7 @@
                   <p class="plan-promo hidden">2 months free</p>
                 </div> </label
               ><br />
-              <input
-                type="radio"
-                id="advanced"
-                name="plan-options"
-                value="advanced"
-              />
+              <input type="radio" id="advanced" name="plan-options" value="1" />
               <label for="advanced" class="plan-label"
                 ><img src="assets/images/icon-advanced.svg" />
                 <div>
@@ -126,7 +121,7 @@
                   <p class="plan-promo hidden">2 months free</p>
                 </div></label
               ><br />
-              <input type="radio" id="pro" name="plan-options" value="pro" />
+              <input type="radio" id="pro" name="plan-options" value="2" />
               <label for="pro" class="plan-label"
                 ><img src="assets/images/icon-pro.svg" />
                 <div>
@@ -157,7 +152,13 @@
           <div class="input-container">
             <div class="addOns-types">
               <label for="firstAddon" class="addOn">
-                <input id="firstAddon" type="checkbox" onclick="updateLabelStyle(this)"/>
+                <input
+                  id="firstAddon"
+                  type="checkbox"
+                  onclick="updateLabelStyle(this)"
+                  name="addons[]"
+                  value="1"
+                />
                 <span></span>
                 <div class="addOn-descri">
                   <div class="addOn-desc">
@@ -168,7 +169,13 @@
                 </div> </label
               ><br />
               <label for="secondAddon" class="addOn">
-                <input id="secondAddon" type="checkbox" onclick="updateLabelStyle(this)"/>
+                <input
+                  id="secondAddon"
+                  type="checkbox"
+                  onclick="updateLabelStyle(this)"
+                  name="addons[]"
+                  value="2"
+                />
                 <span></span>
                 <div class="addOn-descri">
                   <div class="addOn-desc">
@@ -179,7 +186,13 @@
                 </div> </label
               ><br />
               <label for="thirdAddon" class="addOn"
-                ><input id="thirdAddon" type="checkbox" onclick="updateLabelStyle(this)"/>
+                ><input
+                  id="thirdAddon"
+                  type="checkbox"
+                  onclick="updateLabelStyle(this)"
+                  name="addons[]"
+                  value="3"
+                />
                 <span></span>
                 <div class="addOn-descri">
                   <div class="addOn-desc">
@@ -192,9 +205,54 @@
             </div>
           </div>
         </div>
+        <div class="form hidden">
+          <h1>Finishing up</h1>
+          <p class="description">
+            Double-check everything looks OK before confirming.
+          </p>
+          <div class="summary">
+            <div class="space-around-flex">
+              <div class="plan-selected">
+                <p class="plan-selected-name">Arcade (Monthly)</p>
+                <button onclick="goToPlanPage()">Change</button>
+              </div>
+              <div class="plan-amt">$9/mo</div>
+            </div>
+            <hr />
+            <div class="space-around-flex">
+              <p>Online service</p>
+              <p class="addon-sel-price">+$1/mo</p>
+            </div>
+            <div class="space-around-flex">
+              <p>Larger storage</p>
+              <p class="addon-sel-price">+$2/mo</p>
+            </div>
+            <div class="space-around-flex">
+              <p>Customizable profile</p>
+              <p class="addon-sel-price">+$2/mo</p>
+            </div>
+          </div>
+          <div class="padded space-around-flex">
+            <p>Total (per month)</p>
+            <p class="tot-amt">$12/mo</p>
+          </div>
+        </div>
+        <div class="form hidden">
+          <div class="center">
+            <img src="assets/images/icon-thank-you.svg" alt="" />
+            <h1>Thank you!</h1>
+            <p>
+              Thanks for confirmig your subscription! We hope you have fun using
+              our platform. If you ever need support, please feel free to email
+              us at support@loremgaming.com
+            </p>
+          </div>
+        </div>
         <div class="button">
-          <button class="prev hidden" onclick="goBack()">Go Back</button>
-          <button class="next" onclick="goNext()">Next Step</button>
+          <div>
+            <button class="prev hidden" onclick="goBack()">Go Back</button>
+            <button class="next" onclick="goNext()">Next Step</button>
+          </div>
         </div>
       </div>
     </main>

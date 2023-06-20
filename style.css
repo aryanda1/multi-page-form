@@ -116,9 +116,7 @@ input[type="radio"]:checked + .custom-radio {
   font-size: 1rem;
 }
 
-.hidden {
-  display: none;
-}
+
 
 .error-msg {
   color: var(--primary-red);
@@ -334,11 +332,84 @@ input:checked + .toggle .toggle__handler {
   color: var(--primary-purple-blue);
 }
 
+/* 4th */
+.summary {
+  font-size: 1.5rem;
+  background-color: var(--neutral-alabaster);
+  padding: 1.7rem 1.5rem 1.5rem 1.5rem;
+  color: hsl(243, 80%, 82%);
+  border-radius: 10px;
+}
+
+.space-around-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.space-around-flex button {
+  margin:0.3rem 0 1rem 0;
+  text-decoration: underline;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.plan-selected-name{
+  color:hsl(213, 97%, 25%);
+  font-weight: 700;
+}
+
+.plan-amt {
+  font-weight: 700;
+  color: hsl(213, 97%, 25%);
+}
+
+.addon-sel-price{
+  margin-top: 1.5rem;
+  color: hsl(213, 45%, 37%);
+  font-weight: 500;
+}
+
+.space-around-flex.padded{
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  color: hsl(243, 80%, 82%);
+}
+
+.tot-amt{
+  color: var(--primary-purple-blue);
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+/* 5th */
+.center{
+  text-align: center;
+  margin: 5rem 0;
+}
+
+.center h1{
+  margin: 2.5rem 0 1.5rem 0;
+}
+
+.center img{
+  width: 5.5rem;
+}
+
+.center p{
+  font-size: 1.65rem;
+  line-height: 1.4;
+  color: hsl(243, 80%, 82%);
+}
+
 .button {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   background-color: var(--neutral-white);
 }
 
@@ -371,4 +442,14 @@ button {
 
 label input[type="checkbox"] {
   display: none; /* Hide the default checkbox */
+}
+
+.form, .button div{
+  max-width: 500px;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.hidden {
+  display: none;
 }
