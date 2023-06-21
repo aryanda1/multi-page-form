@@ -31,24 +31,29 @@
           <img src="assets/images/bg-sidebar-mobile.svg" alt="Image" />
         </picture>
         <div class="custom-radio-wrapper">
-          <input
-            type="radio"
-            id="option1"
-            name="options"
-            value="1"
-            checked
-            disabled
-          />
-          <label for="option1" class="custom-radio">1</label><br />
-
-          <input type="radio" id="option2" name="options" value="2" disabled />
-          <label for="option2" class="custom-radio">2</label><br />
-
-          <input type="radio" id="option3" name="options" value="3" disabled />
-          <label for="option3" class="custom-radio">3</label><br />
-
-          <input type="radio" id="option4" name="options" value="4" disabled />
-          <label for="option4" class="custom-radio">4</label><br />
+          <label class="rad-label">
+            <input type="radio" class="rad-input" name="rad" checked id="option1" disabled value="1">
+            <div class="rad-design"><span>1</span></div>
+            <div class="rad-text"><p>Step 1</p><p>YOUR INFO</p></div>
+          </label>
+        
+          <label class="rad-label">
+            <input type="radio" class="rad-input" name="rad" id="option2" disabled value="2">
+            <div class="rad-design"><span>2</span></div>
+            <div class="rad-text"><p>Step 2</p><p>SELCT PLAN</p></div>
+          </label>
+        
+          <label class="rad-label">
+            <input type="radio" class="rad-input" name="rad" id="option3" disabled value="3">
+            <div class="rad-design"><span>3</span></div>
+            <div class="rad-text"><p>Step 3</p><p>ADD-ONS</p></div>
+          </label>
+        
+          <label class="rad-label">
+            <input type="radio" class="rad-input" name="rad" id="option4" disabled value="4">
+            <div class="rad-design"><span>4</span></div>
+            <div class="rad-text"><p>Step 4</p><p>SUMMARY</p></div>
+          </label>
         </div>
       </div>
       <div class="content">
@@ -138,7 +143,7 @@
                 id="plan-type"
                 name="plan-type"
               />
-              <label for="plan-type" class="toggle" onclick="monthlyToggler()">
+              <label for="plan-type" class="toggle">
                 <span class="toggle__handler"> </span>
               </label>
             </div>
@@ -237,7 +242,7 @@
             <p class="tot-amt">$12/mo</p>
           </div>
         </div>
-        <div class="form hidden">
+        <div class="form fullHeight hidden">
           <div class="center">
             <img src="assets/images/icon-thank-you.svg" alt="" />
             <h1>Thank you!</h1>

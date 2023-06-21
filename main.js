@@ -1,6 +1,4 @@
-let pageNum = document.querySelector(
-  "input[type='radio'][name=options]:checked"
-).value;
+let pageNum = getCurrentPage();
 
 const forms = document.getElementsByClassName("form");
 
@@ -24,16 +22,14 @@ const planLabels = ["Arcade", "Advanced", "Pro"];
 
 const prevBut = document.getElementsByClassName("prev")[0];
 const nextBut = document.getElementsByClassName("next")[0];
-console.log(yearlyPlan);
-// console.log(pageNum);
+
 let name = "";
 let email = "";
 let phone = "";
 
 function goNext() {
-  pageNum = document.querySelector(
-    "input[type='radio'][name=options]:checked"
-  ).value;
+  pageNum = getCurrentPage();
+  yearlyPlan = isPlanYearly();
   if (pageNum == "1") {
     name = document.getElementById("name").value;
     email = document.getElementById("email").value;
@@ -42,7 +38,9 @@ function goNext() {
     if (name == "") errs[0].innerHTML = "This field is required";
     if (email == "") errs[1].innerHTML = "This field is required";
     if (phone == "") errs[2].innerHTML = "This field is required";
-    if (name == "" || email == "" || phone == "") return;
+    if(email && !validateEmail(email)) errs[1].innerHTML = "Please enter a valid email";
+    if (name == "" || email == "" || phone == "" || !validateEmail(email)) return;
+    for(let i = 0; i < errs.length; i++) errs[i].innerHTML = "";
     prevBut.classList.remove("hidden");
   }
   if (pageNum == "2") {
@@ -101,9 +99,7 @@ function goNext() {
 }
 
 function goBack() {
-  pageNum = Number(
-    document.querySelector("input[type='radio'][name=options]:checked").value
-  );
+  pageNum = getCurrentPage();
   document.getElementById(`option${pageNum - 1}`).checked = true;
   forms[pageNum - 1].classList.add("hidden");
   forms[pageNum - 2].classList.remove("hidden");
@@ -111,23 +107,35 @@ function goBack() {
   if (pageNum == 4) nextBut.textContent = "Next Step";
 }
 
-function monthlyToggler() {
-  console.log(pageNum);
-  if (pageNum == "1")
-    setTimeout(() => {
-      yearlyPlan = isPlanYearly();
-      console.log(yearlyPlan);
-      const planPromo = document.getElementsByClassName("plan-promo");
-      for (let i = 0; i < planPromo.length; i++)
-        if (yearlyPlan) {
-          planPromo[i].classList.remove("hidden");
-          planPrices[i].textContent = `$${monthlyPlanPrices[i] * 10}/yr`;
-        } else {
-          planPromo[i].classList.add("hidden");
-          planPrices[i].textContent = `$${monthlyPlanPrices[i]}/mo`;
-        }
-    }, 10);
+function updateTogler(isYearly) {
+  const planPromo = document.getElementsByClassName("plan-promo");
+  for (let i = 0; i < planPromo.length; i++)
+    if (isYearly) {
+      planPromo[i].classList.remove("hidden");
+      planPrices[i].textContent = `$${monthlyPlanPrices[i] * 10}/yr`;
+    } else {
+      planPromo[i].classList.add("hidden");
+      planPrices[i].textContent = `$${monthlyPlanPrices[i]}/mo`;
+    }
 }
+
+const toggler = document.querySelector(".toggle");
+toggler.addEventListener("click", (event) => {
+  event.preventDefault();
+  const { clientX } = event;
+  const labelRect = toggler.getBoundingClientRect();
+  const plan_toggle = document.getElementById("plan-type");
+  if (clientX < labelRect.left) {
+    updateTogler(false);
+    plan_toggle.checked = false;
+  } else if (clientX > labelRect.right) {
+    updateTogler(true);
+    plan_toggle.checked = true;
+  } else {
+    updateTogler(!isPlanYearly());
+    plan_toggle.checked = !isPlanYearly();
+  }
+});
 
 function updateLabelStyle(checkbox) {
   var label = checkbox.parentNode;
@@ -156,4 +164,15 @@ function getSelectedPlan() {
   return document.querySelector(
     "input[type='radio'][name='plan-options']:checked"
   ).value;
+}
+
+function getCurrentPage() {
+  return document.querySelector("input[type='radio'][name=rad]:checked").value;
+}
+
+
+const emailRegex = /^[\w.-]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
+
+function validateEmail(email) {
+  return emailRegex.test(email);
 }

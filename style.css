@@ -62,26 +62,71 @@ button {
   gap: 1rem;
 }
 
-input[type="radio"] {
-  display: none; /* Hide the default radio button */
+.rad-text {
+  display: none;
 }
 
-.custom-radio {
+.rad-label {
+  display: flex;
+  align-items: center;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.rad-text p:first-child {
+  color: var(--primary-pastel-blue);
+  letter-spacing: normal;
+}
+
+.rad-text p:last-child {
+  color: var(--neutral-alabaster);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.rad-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -1;
+}
+
+.rad-design {
   width: 35px;
   height: 35px;
-  display: inline-flex;
-  border: 1px solid var(--neutral-white);
-  color: var(--neutral-white);
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.5rem;
-  align-items: center;
-  justify-content: center;
+  border-radius: 100px;
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  transition: 0.3s;
+  position: relative;
+  font-size: 15px;
 }
 
-input[type="radio"]:checked + .custom-radio {
-  background-color: var(--primary-light-blue);
+.rad-input:checked + .rad-design {
   color: black;
+  background: var(--primary-light-blue);
+  border: 0;
+}
+
+.rad-text {
+  color: hsl(0, 0%, 60%);
+  margin-left: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.rad-design span {
+  position: absolute;
+  left: 13px;
+  top: 7px;
+  color: inherit;
 }
 
 .form {
@@ -115,8 +160,6 @@ input[type="radio"]:checked + .custom-radio {
   color: var(--primary-marine-blue);
   font-size: 1rem;
 }
-
-
 
 .error-msg {
   color: var(--primary-red);
@@ -155,6 +198,10 @@ input[type="radio"]:checked + .custom-radio {
   padding: 1.5rem;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.plan-types input[type="radio"] {
+  display: none;
 }
 
 input[type="radio"]:checked + .plan-label {
@@ -206,7 +253,7 @@ input[type="radio"]:checked + .plan-label {
   height: 20px;
   background-color: var(--primary-marine-blue);
   border-radius: 84px;
-  transition: background-color 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  transition: background-color 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .toggle:before {
@@ -230,7 +277,6 @@ input[type="radio"]:checked + .plan-label {
 .toggle__handler {
   display: inline-block;
   position: relative;
-  /* z-index: 1; */
   top: 3px;
   left: 3px;
   width: 14px;
@@ -238,7 +284,7 @@ input[type="radio"]:checked + .plan-label {
   background-color: var(--neutral-white);
   border-radius: 50px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
   transform: rotate(-45deg);
 }
 
@@ -280,7 +326,7 @@ input:checked + .toggle .toggle__handler {
   border-radius: 5px;
   display: inline-block;
   position: relative;
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 [type="checkbox"]:checked + span {
@@ -300,7 +346,7 @@ input:checked + .toggle .toggle__handler {
   -webkit-background-clip: text;
   background-clip: text;
   background-position: -20px 0;
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 /* Style its checked state...with a ticked icon */
@@ -330,6 +376,7 @@ input:checked + .toggle .toggle__handler {
 
 .addOn-price {
   color: var(--primary-purple-blue);
+  font-size: 1.3rem;
 }
 
 /* 4th */
@@ -348,7 +395,7 @@ input:checked + .toggle .toggle__handler {
 }
 
 .space-around-flex button {
-  margin:0.3rem 0 1rem 0;
+  margin: 0.3rem 0 1rem 0;
   text-decoration: underline;
   border: 0;
   outline: 0;
@@ -357,8 +404,8 @@ input:checked + .toggle .toggle__handler {
   color: inherit;
 }
 
-.plan-selected-name{
-  color:hsl(213, 97%, 25%);
+.plan-selected-name {
+  color: hsl(213, 97%, 25%);
   font-weight: 700;
 }
 
@@ -367,39 +414,39 @@ input:checked + .toggle .toggle__handler {
   color: hsl(213, 97%, 25%);
 }
 
-.addon-sel-price{
+.addon-sel-price {
   margin-top: 1.5rem;
   color: hsl(213, 45%, 37%);
   font-weight: 500;
 }
 
-.space-around-flex.padded{
+.space-around-flex.padded {
   padding: 1.5rem;
   font-size: 1.5rem;
   color: hsl(243, 80%, 82%);
 }
 
-.tot-amt{
+.tot-amt {
   color: var(--primary-purple-blue);
   font-size: 1.7rem;
   font-weight: 700;
 }
 
 /* 5th */
-.center{
+.center {
   text-align: center;
   margin: 5rem 0;
 }
 
-.center h1{
+.center h1 {
   margin: 2.5rem 0 1.5rem 0;
 }
 
-.center img{
+.center img {
   width: 5.5rem;
 }
 
-.center p{
+.center p {
   font-size: 1.65rem;
   line-height: 1.4;
   color: hsl(243, 80%, 82%);
@@ -433,18 +480,19 @@ button {
   outline: 0;
   border: 0;
   background-color: transparent;
-  color: var(--primary-purple-blue);
+  color: hsl(243, 100%, 82%);
 }
 
 .button .prev:hover {
-  color: var(--primary-marine-blue);
+  color: hsl(213, 96%, 8%);
 }
 
 label input[type="checkbox"] {
   display: none; /* Hide the default checkbox */
 }
 
-.form, .button div{
+.form,
+.button div {
   max-width: 500px;
   margin: 0 auto;
   width: 95%;
@@ -452,4 +500,122 @@ label input[type="checkbox"] {
 
 .hidden {
   display: none;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .plan-types br {
+    display: none;
+  }
+
+  main {
+    display: flex;
+    flex-direction: row;
+    padding: 1.7rem 2rem;
+    background: white;
+    width: 95rem;
+    max-width: 95%;
+    width: fit-content;
+    gap: 7.5rem;
+    margin: 0 auto;
+    border-radius: 10px;
+    height: fit-content;
+  }
+
+  .header {
+    width: fit-content;
+  }
+
+  .header img {
+    max-width: 28rem;
+    height: auto;
+  }
+
+  .custom-radio-wrapper {
+    top: 4rem;
+    gap: 3rem;
+    left: 20%;
+    transform: translateX(-10%);
+    flex-direction: column;
+    align-items: baseline;
+  }
+
+  .rad-text {
+    display: block;
+  }
+
+  .content {
+    position: relative;
+  }
+
+  .form {
+    position: static;
+    margin: 0;
+    width: fit-content;
+    padding-right: 7.5rem;
+    max-width: 600px;
+  }
+
+  .form h1 {
+    font-size: 3rem;
+  }
+
+  .form .description {
+    margin-bottom: 4rem;
+  }
+
+  /* .input-container .inputs input{
+    padding: 1.7rem;
+  } */
+
+  /* 2 */
+  .plan-types {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .plan-label {
+    align-items: baseline;
+    flex-direction: column;
+    gap: 3rem;
+    /* padding-right: 5rem; */
+    flex-basis: 10rem;
+    flex-grow: 1;
+  }
+
+  .addOn {
+    padding: 2rem 2.5rem;
+  }
+
+  .form.fullHeight {
+    height: 100%;
+  }
+
+  .center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .button {
+    position: absolute;
+    padding: 1.5rem 7.5rem 1.5rem 2.5rem;
+  }
+
+  .button div {
+    width: 100%;
+    max-width: none;
+  }
+
+  .button .prev {
+    padding-left: 0;
+  }
 }
