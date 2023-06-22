@@ -508,6 +508,10 @@ label input[type="checkbox"] {
   display: none;
 }
 
+.default-cursor {
+  cursor: default;
+}
+
 @media screen and (min-width: 768px) {
   body {
     min-height: 100vh;

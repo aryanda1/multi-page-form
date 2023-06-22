@@ -31,26 +31,26 @@
           <img src="assets/images/bg-sidebar-mobile.svg" alt="Image" />
         </picture>
         <div class="custom-radio-wrapper">
-          <label class="rad-label">
-            <input type="radio" class="rad-input" name="rad" checked id="option1" disabled value="1">
+          <label class="rad-label default-cursor">
+            <input type="radio" class="rad-input" name="rad" checked id="option1" value="1">
             <div class="rad-design"><span>1</span></div>
             <div class="rad-text"><p>Step 1</p><p>YOUR INFO</p></div>
           </label>
         
           <label class="rad-label">
-            <input type="radio" class="rad-input" name="rad" id="option2" disabled value="2">
+            <input type="radio" class="rad-input" name="rad" id="option2" value="2">
             <div class="rad-design"><span>2</span></div>
             <div class="rad-text"><p>Step 2</p><p>SELCT PLAN</p></div>
           </label>
         
           <label class="rad-label">
-            <input type="radio" class="rad-input" name="rad" id="option3" disabled value="3">
+            <input type="radio" class="rad-input" name="rad" id="option3" value="3">
             <div class="rad-design"><span>3</span></div>
             <div class="rad-text"><p>Step 3</p><p>ADD-ONS</p></div>
           </label>
         
           <label class="rad-label">
-            <input type="radio" class="rad-input" name="rad" id="option4" disabled value="4">
+            <input type="radio" class="rad-input" name="rad" id="option4" value="4">
             <div class="rad-design"><span>4</span></div>
             <div class="rad-text"><p>Step 4</p><p>SUMMARY</p></div>
           </label>
@@ -71,6 +71,7 @@
                 id="name"
                 name="name"
                 placeholder="e.g. Stephen King"
+                onblur="validateInput(this)"
               />
             </div>
             <div class="inputs">
@@ -81,6 +82,7 @@
                 id="email"
                 name="email"
                 placeholder="e.g. stephenking@lorem.com"
+                onblur="validateInput(this)"
               />
             </div>
             <div class="inputs">
@@ -91,6 +93,7 @@
                 id="phone"
                 name="phone"
                 placeholder="e.g. +1 234 567 890"
+                onblur="validateInput(this)"
               />
             </div>
           </div>
@@ -224,15 +227,15 @@
               <div class="plan-amt">$9/mo</div>
             </div>
             <hr />
-            <div class="space-around-flex">
+            <div class="space-around-flex hidden">
               <p>Online service</p>
               <p class="addon-sel-price">+$1/mo</p>
             </div>
-            <div class="space-around-flex">
+            <div class="space-around-flex hidden">
               <p>Larger storage</p>
               <p class="addon-sel-price">+$2/mo</p>
             </div>
-            <div class="space-around-flex">
+            <div class="space-around-flex hidden">
               <p>Customizable profile</p>
               <p class="addon-sel-price">+$2/mo</p>
             </div>

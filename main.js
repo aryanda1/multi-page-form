@@ -6,17 +6,14 @@ let currentPlan = getSelectedPlan();
 let isPlanYear = isPlanYearly();
 const planPrices = document.getElementsByClassName("plan-price");
 const addOnPriceComponents = document.getElementsByClassName("addOn-price");
-const priceSummaryContainer = document.getElementsByClassName("space-around-flex");
-
-let finalPrice = 0;
+const priceSummaryContainer =
+  document.getElementsByClassName("space-around-flex");
+const errorMessages = document.getElementsByClassName("error-msg");
 
 const monthlyPlanPrices = [9, 12, 15];
 const addOnPrices = [1, 2, 2];
-const addOnLabels = [
-  "Online Service",
-  "Larger Storage",
-  "Customizable Profile",
-];
+let finalPrice = 0;
+
 const planLabels = ["Arcade", "Advanced", "Pro"];
 
 const previousButton = document.getElementsByClassName("prev")[0];
@@ -26,74 +23,41 @@ let nameInput = "";
 let emailInput = "";
 let phoneInput = "";
 
-nextButton.addEventListener("click", goToNextPage);
-function goToNextPage() {
-  currentPageNumber = getCurrentPage();
+
+nextButton.addEventListener("click", function () {
+  goToNextPage();
+});
+function goToNextPage(pageNum = getCurrentPage()) {
   isPlanYear = isPlanYearly();
-  if (currentPageNumber === "1") {
-    nameInput = document.getElementById("name").value;
-    emailInput = document.getElementById("email").value;
-    phoneInput = document.getElementById("phone").value;
-    const errorMessages = document.getElementsByClassName("error-msg");
-    if (nameInput === "") errorMessages[0].innerHTML = "This field is required";
-    if (emailInput === "") errorMessages[1].innerHTML = "This field is required";
-    if (phoneInput === "") errorMessages[2].innerHTML = "This field is required";
-    if (emailInput && !validateEmail(emailInput)) errorMessages[1].innerHTML = "Please enter a valid email";
-    if (nameInput === "" || emailInput === "" || phoneInput === "" || !validateEmail(emailInput)) return;
-    for (let i = 0; i < errorMessages.length; i++) errorMessages[i].innerHTML = "";
-    previousButton.classList.remove("hidden");
+  if (pageNum === 0) previousButton.classList.add("hidden");
+  else previousButton.classList.remove("hidden");
+  if (pageNum === 1) {
+    if (validateFirstPage()) return;
   }
-  if (currentPageNumber === "2") {
+  if (pageNum === 2) {
     currentPlan = getSelectedPlan();
-    for (let i = 0; i < addOnPriceComponents.length; i++) {
-      addOnPriceComponents[i].textContent = isPlanYear
-        ? `+$${addOnPrices[i] * 10}/yr`
-        : `+$${addOnPrices[i]}/mo`;
-    }
+    for (let i = 0; i < addOnPriceComponents.length; i++)
+      addOnPriceComponents[i].textContent = `+$${
+        addOnPrices[i] * (isPlanYear ? 10 : 1)
+      }/${getSuffix()}`;
   }
-  if (currentPageNumber === "3") {
-    let checkboxes = document.querySelectorAll(
-      "input[type='checkbox'][name='addons[]']:checked"
-    );
-    finalPrice = monthlyPlanPrices[currentPlan];
-
-    for (let i = 1; i <= 3; i++) {
-      priceSummaryContainer[i].classList.add("hidden");
-    }
-    for (let i = 0; i < checkboxes.length; i++) {
-      let idx = checkboxes[i].value;
-      priceSummaryContainer[idx].classList.remove("hidden");
-      let pElements = priceSummaryContainer[idx].querySelectorAll("p");
-      pElements[1].textContent = isPlanYear
-        ? `+$${addOnPrices[idx - 1] * 10}/yr`
-        : `+$${addOnPrices[idx - 1]}/mo`;
-      finalPrice += addOnPrices[idx - 1];
-    }
-
-    let finalPriceTitle = document.querySelector(
-      ".padded.space-around-flex > p:first-child"
-    );
-    let finalPriceElement = document.getElementsByClassName("tot-amt")[0];
-    finalPriceTitle.textContent = `Total (pre ${isPlanYear ? "year" : "month"})`;
-    finalPrice *= isPlanYear ? 10 : 1;
-    finalPriceElement.textContent = `$${finalPrice}/${isPlanYear ? "yr" : "mo"}`;
-    const planSelected = document.getElementsByClassName("plan-selected-name")[0];
-
-    planSelected.textContent = `${planLabels[currentPlan]} (${isPlanYear ? "Yearly" : "Monthly"})`;
-    document.getElementsByClassName("plan-amt")[0].textContent = isPlanYear
-      ? `$${10 * monthlyPlanPrices[currentPlan]}/yr`
-      : `$${monthlyPlanPrices[currentPlan]}/mo`;
-
+  if (pageNum >= 0 && pageNum <= 3) {
+    updateRadioCursor(labels[pageNum]);
+    nextButton.textContent = "Next Step";
+    console.log(`option${Number(pageNum) + 1}`);
+    setTimeout(() => {
+      document.getElementById(`option${Number(pageNum) + 1}`).checked = true;
+    }, 10);
+  }
+  if (pageNum === 3) {
+    updateFinalPage();
     nextButton.textContent = "Confirm";
   }
-  if (currentPageNumber === "4") {
+  if (pageNum === 4) {
     document.getElementsByClassName("button")[0].classList.add("hidden");
   }
-  if (currentPageNumber !== "4") {
-    document.getElementById(`option${Number(currentPageNumber) + 1}`).checked = true;
-  }
-  forms[currentPageNumber - 1].classList.add("hidden");
-  forms[currentPageNumber].classList.remove("hidden");
+  forms[(pageNum - 1 + 4) % 4].classList.add("hidden");
+  forms[pageNum].classList.remove("hidden");
 }
 
 function goBack() {
@@ -103,6 +67,7 @@ function goBack() {
   forms[currentPageNumber - 2].classList.remove("hidden");
   if (currentPageNumber === 2) previousButton.classList.add("hidden");
   if (currentPageNumber === 4) nextButton.textContent = "Next Step";
+  updateRadioCursor(labels[currentPageNumber - 2]);
 }
 
 function updateToggler(isYearly) {
@@ -118,6 +83,7 @@ function updateToggler(isYearly) {
   }
 }
 
+//used for toggling the monthly/yearly plan
 const toggler = document.querySelector(".toggle");
 toggler.addEventListener("click", (event) => {
   event.preventDefault();
@@ -136,13 +102,11 @@ toggler.addEventListener("click", (event) => {
   }
 });
 
+//used for adding styles for input parent
 function updateLabelStyle(checkbox) {
-  var label = checkbox.parentNode;
-  if (checkbox.checked) {
-    label.classList.add("checked");
-  } else {
-    label.classList.remove("checked");
-  }
+  let label = checkbox.parentNode;
+  if (checkbox.checked) label.classList.add("checked");
+  else label.classList.remove("checked");
 }
 
 function goToPlanPage() {
@@ -166,11 +130,103 @@ function getSelectedPlan() {
 }
 
 function getCurrentPage() {
-  return document.querySelector("input[type='radio'][name=rad]:checked").value;
+  return Number(
+    document.querySelector("input[type='radio'][name=rad]:checked").value
+  );
 }
 
 const emailRegex = /^[\w.-]+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
 
 function validateEmail(email) {
   return emailRegex.test(email);
+}
+
+function getSuffix() {
+  return isPlanYearly() ? "yr" : "mo";
+}
+
+function validateFirstPage() {
+  nameInput = document.getElementById("name").value;
+  emailInput = document.getElementById("email").value;
+  phoneInput = document.getElementById("phone").value;
+  validateInput(document.getElementById("name"));
+  validateInput(document.getElementById("phone"));
+  validateInput(document.getElementById("email"));
+  if (
+    nameInput === "" ||
+    emailInput === "" ||
+    phoneInput === "" ||
+    !validateEmail(emailInput)
+  )
+    return true;
+  return false;
+}
+
+function updateFinalPage() {
+  currentPlan = getSelectedPlan();
+  let checkboxes = document.querySelectorAll(
+    "input[type='checkbox'][name='addons[]']:checked"
+  );
+  finalPrice = monthlyPlanPrices[currentPlan];
+  for (let i = 1; i <= 3; i++) {
+    priceSummaryContainer[i].classList.add("hidden");
+  }
+  for (let i = 0; i < checkboxes.length; i++) {
+    let idx = checkboxes[i].value;
+    priceSummaryContainer[idx].classList.remove("hidden");
+    let pElements = priceSummaryContainer[idx].querySelectorAll("p");
+    pElements[1].textContent = `+$${
+      addOnPrices[idx - 1] * (isPlanYear ? 10 : 1)
+    }/${getSuffix()}`;
+    finalPrice += addOnPrices[idx - 1];
+  }
+  finalPrice *= isPlanYear ? 10 : 1;
+  let finalPriceTitle = document.querySelector(
+    ".padded.space-around-flex > p:first-child"
+  );
+  finalPriceTitle.textContent = `Total (per ${isPlanYear ? "year" : "month"})`;
+  let finalPriceElement = document.querySelector(".tot-amt");
+  finalPriceElement.textContent = `$${finalPrice}/${getSuffix()}`;
+
+  const planSelected = document.querySelector(".plan-selected-name");
+  planSelected.textContent = `${planLabels[currentPlan]} (${
+    isPlanYear ? "Yearly" : "Monthly"
+  })`;
+  document.querySelector(".plan-amt").textContent = `$${
+    monthlyPlanPrices[currentPlan] * (isPlanYear ? 10 : 1)
+  }/${getSuffix()}`;
+}
+
+//used for validating the input fields on blur
+function validateInput(input) {
+  const idx = input.name === "name" ? 0 : input.name === "phone" ? 2 : 1;
+  if (input.value === "") {
+    errorMessages[idx].innerHTML = "This field is required";
+  } else {
+    if (input.name != "email") errorMessages[idx].innerHTML = "";
+    else if (!validateEmail(input.value)) {
+      errorMessages[idx].innerHTML = "Please enter a valid email";
+    } else errorMessages[idx].innerHTML = "";
+  }
+}
+
+const labels = document.querySelectorAll(".rad-label");
+let prevLabel = labels[0];
+labels.forEach((label) => {
+  const input = label.querySelector(".rad-input");
+  input.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (input.parentNode == prevLabel || validateFirstPage()) return;
+    const pageNum = parseInt(input.value);
+    goToNextPage(pageNum - 1);
+  });
+});
+
+function updateRadioCursor(label) {
+  label.classList.add("default-cursor");
+  prevLabel.classList.remove("default-cursor");
+  forms[prevLabel.querySelector(".rad-input").value - 1].classList.add(
+    "hidden"
+  );
+  prevLabel = label;
 }
