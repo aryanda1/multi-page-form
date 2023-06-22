@@ -1,39 +1,31 @@
-let currentPageNumber = getCurrentPage();
-
 const forms = document.getElementsByClassName("form");
-
-let currentPlan = getSelectedPlan();
-let isPlanYear = isPlanYearly();
 const planPrices = document.getElementsByClassName("plan-price");
 const addOnPriceComponents = document.getElementsByClassName("addOn-price");
 const priceSummaryContainer =
   document.getElementsByClassName("space-around-flex");
 const errorMessages = document.getElementsByClassName("error-msg");
-
+const planLabels = ["Arcade", "Advanced", "Pro"];
 const monthlyPlanPrices = [9, 12, 15];
 const addOnPrices = [1, 2, 2];
-let finalPrice = 0;
-
-const planLabels = ["Arcade", "Advanced", "Pro"];
-
 const previousButton = document.getElementsByClassName("prev")[0];
 const nextButton = document.getElementsByClassName("next")[0];
 
+let currentPageNumber = getCurrentPage();
+let currentPlan = getSelectedPlan();
+let isPlanYear = isPlanYearly();
+let finalPrice = 0;
 let nameInput = "";
 let emailInput = "";
 let phoneInput = "";
-
 
 nextButton.addEventListener("click", function () {
   goToNextPage();
 });
 function goToNextPage(pageNum = getCurrentPage()) {
   isPlanYear = isPlanYearly();
+  if (pageNum === 1 && validateFirstPage()) return;
   if (pageNum === 0) previousButton.classList.add("hidden");
   else previousButton.classList.remove("hidden");
-  if (pageNum === 1) {
-    if (validateFirstPage()) return;
-  }
   if (pageNum === 2) {
     currentPlan = getSelectedPlan();
     for (let i = 0; i < addOnPriceComponents.length; i++)
@@ -44,7 +36,6 @@ function goToNextPage(pageNum = getCurrentPage()) {
   if (pageNum >= 0 && pageNum <= 3) {
     updateRadioCursor(labels[pageNum]);
     nextButton.textContent = "Next Step";
-    console.log(`option${Number(pageNum) + 1}`);
     setTimeout(() => {
       document.getElementById(`option${Number(pageNum) + 1}`).checked = true;
     }, 10);
@@ -54,6 +45,7 @@ function goToNextPage(pageNum = getCurrentPage()) {
     nextButton.textContent = "Confirm";
   }
   if (pageNum === 4) {
+    disablenav();
     document.getElementsByClassName("button")[0].classList.add("hidden");
   }
   forms[(pageNum - 1 + 4) % 4].classList.add("hidden");
@@ -172,20 +164,20 @@ function updateFinalPage() {
     priceSummaryContainer[i].classList.add("hidden");
   }
   for (let i = 0; i < checkboxes.length; i++) {
-    let idx = checkboxes[i].value;
+    const idx = checkboxes[i].value;
     priceSummaryContainer[idx].classList.remove("hidden");
-    let pElements = priceSummaryContainer[idx].querySelectorAll("p");
+    const pElements = priceSummaryContainer[idx].querySelectorAll("p");
     pElements[1].textContent = `+$${
       addOnPrices[idx - 1] * (isPlanYear ? 10 : 1)
     }/${getSuffix()}`;
     finalPrice += addOnPrices[idx - 1];
   }
   finalPrice *= isPlanYear ? 10 : 1;
-  let finalPriceTitle = document.querySelector(
+  const finalPriceTitle = document.querySelector(
     ".padded.space-around-flex > p:first-child"
   );
   finalPriceTitle.textContent = `Total (per ${isPlanYear ? "year" : "month"})`;
-  let finalPriceElement = document.querySelector(".tot-amt");
+  const finalPriceElement = document.querySelector(".tot-amt");
   finalPriceElement.textContent = `$${finalPrice}/${getSuffix()}`;
 
   const planSelected = document.querySelector(".plan-selected-name");
@@ -210,17 +202,35 @@ function validateInput(input) {
   }
 }
 
+function clickHandler(e) {
+  e.preventDefault();
+  const input = e.target;
+  if (input.parentNode == prevLabel || validateFirstPage()) return;
+  const pageNum = parseInt(input.value);
+  goToNextPage(pageNum - 1);
+}
+
 const labels = document.querySelectorAll(".rad-label");
 let prevLabel = labels[0];
-labels.forEach((label) => {
-  const input = label.querySelector(".rad-input");
-  input.addEventListener("click", function (e) {
-    e.preventDefault();
-    if (input.parentNode == prevLabel || validateFirstPage()) return;
-    const pageNum = parseInt(input.value);
-    goToNextPage(pageNum - 1);
+
+function toggleNavButtons(add = true) {
+  console.log(add);
+  labels.forEach((label) => {
+    const input = label.querySelector(".rad-input");
+    if (add === true) input.addEventListener("click", clickHandler);
+    else input.removeEventListener("click", clickHandler);
   });
-});
+}
+toggleNavButtons();
+
+function disablenav() {
+  toggleNavButtons(false);
+  const navRadios = document.querySelectorAll(".rad-input");
+  navRadios.forEach((radio) => {
+    radio.disabled = true;
+    radio.parentNode.classList.add("default-cursor");
+  });
+}
 
 function updateRadioCursor(label) {
   label.classList.add("default-cursor");
